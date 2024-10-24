@@ -1,0 +1,4 @@
+GET http://localhost:3300/users
+GET http://localhost:3300/users/12345x
+
+GET http://localhost:3300/users/?limit=10&page=1
