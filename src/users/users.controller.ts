@@ -18,15 +18,46 @@ import { CreateUserDto } from './dtos/create.user.dto';
 import { GetUserParamsDto } from './dtos/get-user-params.dto';
 import { PatchUserDto } from './dtos/patch-user.dto';
 import { UsersService } from './providers/users.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 @Controller('users')
 @ApiTags('Users')
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
   @Get('/:id?')
+  @ApiOperation({ summary: 'Get all users' })
+  @ApiResponse({
+    status: 200,
+    description: 'Users fetched successfully based on the query',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'No users found',
+  })
+  @ApiResponse({
+    status: 500,
+    description: 'Internal server error',
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad request',
+  })
+  @ApiQuery({
+    name: 'limit',
+    type: 'number',
+    required: false,
+    description: 'Limit the number of users returned',
+    example: 10,
+  })
+  @ApiQuery({
+    name: 'page',
+    type: 'number',
+    required: true,
+    description: 'Specify the page number',
+    example: 1,
+  })
   public getUsers(
     @Param() getUsersParamDto: GetUserParamsDto,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: any,
+    @Query('limit', new DefaultValuePipe(10), ParseIntPipe) limit: number,
     @Query('page', new DefaultValuePipe(1), ParseIntPipe) page: number,
   ): string {
     return this.userService.findAll(getUsersParamDto, limit, page);

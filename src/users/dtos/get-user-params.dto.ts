@@ -5,6 +5,7 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 export class GetUserParamsDto {
   @ApiPropertyOptional({
     description: 'User ID',
+    example: 1,
   })
   @IsOptional()
   @IsInt()
