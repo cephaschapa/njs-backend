@@ -24,4 +24,7 @@ export class PostsService {
       },
     ];
   }
+
+  // Create Post Request
+  public createPost() {}
 }

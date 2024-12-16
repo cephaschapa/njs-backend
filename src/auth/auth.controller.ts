@@ -16,4 +16,6 @@ export class AuthController {
   public login() {
     return this.authService.login('email', 'password', 'id');
   }
+
+  // GET Users
 }
