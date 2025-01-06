@@ -1,6 +1,10 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { GetUserParamsDto } from '../dtos/get-user-params.dto';
 import { AuthService } from 'src/auth/providers/auth.service';
+import { Repository } from 'typeorm';
+import { User } from '../user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CreateUserDto } from '../dtos/create.user.dto';
 
 /**
  * Class to class to connect Users table and perform business logic operations
@@ -12,40 +16,37 @@ export class UsersService {
    * @param authService
    */
   constructor(
-    // Inject
-    @Inject(forwardRef(() => AuthService))
-    private readonly authService: AuthService,
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
   ) {}
 
   /**
-   * Test data
-   */
+   * This function creates a new user
+   * @param user */
 
-  public USER_DATA = [
-    {
-      id: '1',
-      name: 'John Doe',
-      email: 'jd@doe.com',
-    },
-    {
-      id: '2',
-      name: 'Jane Doe',
-      email: 'dj@doe.com',
-    },
-  ];
+  public async createUser(createUserDto: CreateUserDto) {
+    // check if user exists
+    const existingUser = await this.usersRepository.findOne({
+      where: { email: createUserDto.email },
+    });
 
-  /**
-   * This function returns all users
-   */
+    // Handle exception
+
+    // Create user
+    let newUser = this.usersRepository.create(createUserDto);
+    newUser = await this.usersRepository.save(newUser);
+
+    // Return user
+
+    return newUser;
+  }
 
   public findAll(
     getUsersParamDto: GetUserParamsDto,
     limit: number,
     page: number,
   ): any {
-    const isAuth = this.authService.isAuth();
-    console.log(isAuth);
-    return this.USER_DATA;
+    return [];
   }
 
   /**
@@ -53,6 +54,6 @@ export class UsersService {
    * @param id */
 
   public findById(id: string): any {
-    return this.USER_DATA.find((user) => user.id === id);
+    return '';
   }
 }
