@@ -1,9 +1,8 @@
-GET http://localhost:3300/posts/1
-
-POST http://localhost:3300/posts
+PATCH http://localhost:3300/posts/1
 Content-Type: application/json
 
 {
+        "id": 1,
         "title": "Post 1",
         "content": "Content 1",
         "postType": "post",
