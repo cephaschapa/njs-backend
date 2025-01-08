@@ -6,6 +6,8 @@ import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './users/user.entity';
+import { TagsModule } from './tags/tags.module';
+import { MetaOptionsModule } from './meta-options/meta-options.module';
 
 /**
  * User created modules are imported here
@@ -16,6 +18,8 @@ import { User } from './users/user.entity';
     UsersModule,
     PostsModule,
     AuthModule,
+    TagsModule,
+    MetaOptionsModule,
     TypeOrmModule.forRootAsync({
       imports: [],
       inject: [],
