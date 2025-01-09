@@ -22,7 +22,7 @@ export class Tag {
 
   @Column({
     type: 'varchar',
-    length: 514,
+    length: 256,
     nullable: false,
     unique: true,
   })
@@ -31,14 +31,12 @@ export class Tag {
   @Column({
     type: 'text',
     nullable: true,
-    length: 1024,
   })
-  desciption?: string;
+  description?: string;
 
   @Column({
     type: 'text',
     nullable: true,
-    length: 1024,
   })
   schema?: string;
 

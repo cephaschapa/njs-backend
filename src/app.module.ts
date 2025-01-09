@@ -25,7 +25,8 @@ import { MetaOptionsModule } from './meta-options/meta-options.module';
       inject: [],
       useFactory: () => ({
         type: 'postgres',
-        entities: [User],
+        // entities: [User],
+        autoLoadEntities: true,
         host: process.env.DB_HOST || 'localhost',
         port: (process.env.DB_PORT as never as number) || 5432,
         synchronize: true,
