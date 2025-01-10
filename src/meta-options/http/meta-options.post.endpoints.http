@@ -1,0 +1,6 @@
+POST http://localhost:3300/meta-options
+Content-Type: application/json
+
+{
+  "metaValue": "{\"sidebarEnbaled\": true, \"theme\": \"dark\"}"
+}
