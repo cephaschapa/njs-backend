@@ -74,9 +74,13 @@ export class Post {
 
   //  TODO: Add the following columns to the Post entity seperately
 
-  @OneToOne(() => MetaOptions)
+  @OneToOne(() => MetaOptions, (metaOptions) => metaOptions.post, {
+    cascade: true,
+    nullable: true,
+    eager: true,
+  })
   @JoinColumn()
-  metaOptions: MetaOptions;
+  metaOptions?: MetaOptions;
 
   tags: string[];
 }
