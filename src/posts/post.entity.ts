@@ -79,7 +79,6 @@ export class Post {
     nullable: true,
     eager: true,
   })
-  @JoinColumn()
   metaOptions?: MetaOptions;
 
   tags: string[];

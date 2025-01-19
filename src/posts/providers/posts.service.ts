@@ -63,27 +63,7 @@ export class PostsService {
 
   public async deleteById(id: number) {
     // find the post if it exists
-    let post = await this.postRepository.findOne({
-      where: {
-        id,
-      },
-    });
-
-    // if post does not exist
-    if (!post) {
-      return {
-        message: 'Post not found',
-      };
-    }
-
-    // delete post
-    await this.postRepository.delete(post.id);
-
-    // delete meta options
-    await this,
-      this.metaOptionsRepository.delete({
-        id: post.metaOptions.id,
-      });
+    await this.postRepository.delete(id);
 
     return {
       deleted: true,
