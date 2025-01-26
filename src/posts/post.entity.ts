@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
   OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
@@ -11,6 +12,7 @@ import { postStatus } from './enums/postStatus.enum';
 import { CreatePostMetaOptionsDto } from '../meta-options/dtos/create-post-meta-options.dto';
 import { MetaOptions } from 'src/meta-options/meta-option.entity';
 import { Tag } from 'src/tags/tag.entiry';
+import { User } from 'src/users/user.entity';
 
 @Entity()
 export class Post {
@@ -80,6 +82,9 @@ export class Post {
     eager: true,
   })
   metaOptions?: MetaOptions;
+
+  @ManyToOne(() => User, (user) => user.posts, {}) // define inverse relationship
+  author: User;
 
   tags: string[];
 }
