@@ -1,8 +1,7 @@
 import { Body, Inject, Injectable } from '@nestjs/common';
-import { title } from 'process';
 import { UsersService } from 'src/users/providers/users.service';
 import { CreatePostDto } from '../dtos/create.post.dto';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Post } from '../post.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MetaOptions } from 'src/meta-options/meta-option.entity';
