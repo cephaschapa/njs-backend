@@ -8,9 +8,9 @@ export class AuthService {
     @Inject(forwardRef(() => UsersService))
     private readonly usersService: UsersService,
   ) {}
-  public login(email: string, password: string, id) {
+  public async login(email: string, password: string, id) {
     // check if user exists
-    const user = this.usersService.findById(id);
+    const user = await this.usersService.findOneById(id);
     // login
     if (user.email === email && user.password === password) {
       return {

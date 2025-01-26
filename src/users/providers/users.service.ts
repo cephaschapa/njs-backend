@@ -53,7 +53,15 @@ export class UsersService {
    * This function returns a user by id
    * @param id */
 
-  public findById(id: string): any {
+  public async findOneById(id: number): Promise<User> {
+    return await this.usersRepository.findOneBy({ id });
+  }
+
+  /**
+   * This function returns a user by email
+   * @param email */
+
+  public findByEmail(email: string): any {
     return '';
   }
 }

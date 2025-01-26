@@ -26,8 +26,10 @@ export class PostsService {
    * Create a new post
    */
   public async create(@Body() createPostDto: CreatePostDto) {
+    // Find author from database based on authorId
+    let author = await this.usersService.findOneById(createPostDto.authorId);
     // Create post
-    let post = this.postRepository.create(createPostDto);
+    let post = this.postRepository.create({ ...createPostDto, author: author });
 
     // Save post
     return await this.postRepository.save(post);

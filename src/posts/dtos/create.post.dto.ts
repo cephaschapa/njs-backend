@@ -1,6 +1,7 @@
 import {
   IsArray,
   IsEnum,
+  IsInt,
   IsISO8601,
   IsJSON,
   IsNotEmpty,
@@ -17,6 +18,7 @@ import { postStatus } from '../enums/postStatus.enum';
 import { CreatePostMetaOptionsDto } from '../../meta-options/dtos/create-post-meta-options.dto';
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Column } from 'typeorm';
 
 export class CreatePostDto {
   @ApiProperty({
@@ -123,4 +125,15 @@ export class CreatePostDto {
   @ValidateNested({ each: true })
   @Type(() => CreatePostMetaOptionsDto)
   metaOptions?: CreatePostMetaOptionsDto | null;
+
+  @ApiProperty({
+    type: 'integer',
+    example: 1,
+    required: true,
+    description: 'The author id of the post',
+  })
+  @IsNotEmpty()
+  @IsInt()
+  @Column()
+  authorId: number;
 }
