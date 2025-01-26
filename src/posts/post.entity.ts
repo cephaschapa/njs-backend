@@ -83,7 +83,9 @@ export class Post {
   })
   metaOptions?: MetaOptions;
 
-  @ManyToOne(() => User, (user) => user.posts, {}) // define inverse relationship
+  @ManyToOne(() => User, (user) => user.posts, {
+    eager: true,
+  }) // define inverse relationship
   author: User;
 
   tags: string[];

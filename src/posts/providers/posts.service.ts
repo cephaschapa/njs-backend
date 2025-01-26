@@ -50,9 +50,9 @@ export class PostsService {
 
   public async findById(id: number) {
     let post = await this.postRepository.find({
-      relations: ['metaOptions'],
-      where: {
-        id,
+      relations: {
+        metaOptions: true,
+        // author: true,
       },
     });
 
