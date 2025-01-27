@@ -2,6 +2,8 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -11,7 +13,7 @@ import { PostType } from './enums/postType.enum';
 import { postStatus } from './enums/postStatus.enum';
 import { CreatePostMetaOptionsDto } from '../meta-options/dtos/create-post-meta-options.dto';
 import { MetaOptions } from 'src/meta-options/meta-option.entity';
-import { Tag } from 'src/tags/tag.entiry';
+import { Tag } from 'src/tags/tag.entity';
 import { User } from 'src/users/user.entity';
 
 @Entity()
@@ -88,5 +90,7 @@ export class Post {
   }) // define inverse relationship
   author: User;
 
-  tags: string[];
+  @ManyToMany(() => Tag)
+  @JoinTable()
+  tags?: Tag[];
 }

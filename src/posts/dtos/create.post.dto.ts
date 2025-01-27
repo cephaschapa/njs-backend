@@ -19,6 +19,7 @@ import { CreatePostMetaOptionsDto } from '../../meta-options/dtos/create-post-me
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Column } from 'typeorm';
+import { Tag } from 'src/tags/tag.entity';
 
 export class CreatePostDto {
   @ApiProperty({
@@ -96,14 +97,13 @@ export class CreatePostDto {
   publishedOn?: Date;
 
   @ApiPropertyOptional({
-    example: ['tag1', 'tag2'],
-    description: 'The tags of the post',
+    example: [1, 2, 3],
+    description: 'The tags ids of the post',
   })
   @IsArray()
   @IsOptional()
-  @IsString({ each: true })
-  @MinLength(3, { each: true })
-  tags?: string[];
+  @IsInt({ each: true })
+  tags?: number[];
 
   // nested DTO
   @ApiPropertyOptional({
