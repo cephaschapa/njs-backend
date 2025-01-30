@@ -91,11 +91,8 @@ export class PostsController {
     summary: 'Updates an existing post',
     description: 'Updates and existing post with the provided data',
   })
-  @Patch('/:postId')
-  public updatePost(
-    @Param('postId') postId: string,
-    @Body() patchPostDto: PatchPostDto,
-  ) {
-    console.log(patchPostDto);
+  @Patch()
+  public updatePost(@Body() patchPostDto: PatchPostDto) {
+    return this.postsService.update(patchPostDto);
   }
 }

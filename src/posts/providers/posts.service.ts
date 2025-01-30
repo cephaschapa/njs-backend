@@ -8,6 +8,7 @@ import { MetaOptions } from 'src/meta-options/meta-option.entity';
 import { TagsService } from 'src/tags/providers/tags.service';
 import { Tag } from 'src/tags/tag.entity';
 import { User } from 'src/users/user.entity';
+import { PatchPostDto } from '../dtos/patch-post.dto';
 
 @Injectable()
 export class PostsService {
@@ -71,6 +72,26 @@ export class PostsService {
     });
 
     return post;
+  }
+
+  public async update(patchPostDto: PatchPostDto) {
+    console.log(patchPostDto);
+    // find the tag if it exists
+    let tags = await this.tagService.findMultiple(patchPostDto.tags);
+    // find the post if it exists
+    let post = await this.postRepository.findOneBy({ id: patchPostDto.id });
+    // Update the properties
+    post.title = patchPostDto.title ?? post.title;
+    post.content = patchPostDto.content ?? post.content;
+    post.status = patchPostDto.status ?? post.status;
+    post.slug = patchPostDto.slug ?? post.slug;
+    post.postType = patchPostDto.postType ?? post.postType;
+    post.featuredImage = patchPostDto.featuredImageUrl ?? post.featuredImage;
+    post.publishedOn = patchPostDto.publishedOn ?? post.publishedOn;
+    // Assign the new tags
+    post.tags = tags;
+    // save the post and return it
+    return await this.postRepository.save(post);
   }
 
   /**

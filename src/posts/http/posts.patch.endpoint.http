@@ -1,19 +1,14 @@
-PATCH http://localhost:3300/posts/1
+PATCH http://localhost:3300/posts
 Content-Type: application/json
 
 {
-        "id": 1,
-        "title": "Post 1",
-        "content": "Content 1",
+        "id": 13,
+        "title": "Post with tags update",
+        "content": "Content 1 with tags",
         "postType": "post",
         "slug": "post-1",
         "status": "published",
-        "schema": "{\r\n \"@context\": \"https://schema.org\",\r\n \"@type\": \"Person\"\r\n}",
         "featuredImageUrl": "http://string.com",
         "publishedOn": "2021-08-01T00:00:00.000Z",
-        "tags": ["tag1", "tag2"],
-        "metaOptions":[{
-                "key": "testKey",
-                "value": "testValue"
-        }]
+        "tags": [1, 2]
 }
