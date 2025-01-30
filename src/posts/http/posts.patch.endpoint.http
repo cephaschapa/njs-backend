@@ -10,5 +10,5 @@ Content-Type: application/json
         "status": "published",
         "featuredImageUrl": "http://string.com",
         "publishedOn": "2021-08-01T00:00:00.000Z",
-        "tags": [1, 2]
+        "tags": [1, 2, 3]
 }

@@ -30,4 +30,12 @@ export class TagsService {
   public async findById(id: number) {
     return 'Find tag by id';
   }
+
+  public async delete(id: number) {
+    await this.tagRepository.delete(id);
+    return {
+      deleted: true,
+      id,
+    };
+  }
 }

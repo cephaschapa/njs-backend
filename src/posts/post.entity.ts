@@ -90,7 +90,9 @@ export class Post {
   }) // define inverse relationship
   author: User;
 
-  @ManyToMany(() => Tag)
+  @ManyToMany(() => Tag, (tag) => tag.posts, {
+    eager: true,
+  })
   @JoinTable()
   tags?: Tag[];
 }

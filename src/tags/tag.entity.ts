@@ -1,3 +1,4 @@
+import { Post } from 'src/posts/post.entity';
 import {
   Column,
   CreateDateColumn,
@@ -47,6 +48,11 @@ export class Tag {
     length: 1024,
   })
   featuredImageUrl: string;
+
+  @ManyToMany(() => Post, (post) => post.tags, {
+    onDelete: 'CASCADE',
+  })
+  posts: Post[];
 
   @CreateDateColumn()
   createDate: Date;
