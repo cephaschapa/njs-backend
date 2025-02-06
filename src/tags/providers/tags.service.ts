@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Post } from 'src/posts/post.entity';
 import { In, Repository } from 'typeorm';
 import { Tag } from '../tag.entity';
 import { CreateTagDto } from '../dtos/create-tag.dto';
@@ -35,6 +34,15 @@ export class TagsService {
     await this.tagRepository.delete(id);
     return {
       deleted: true,
+      id,
+    };
+  }
+
+  // Soft delete a tag
+  public async softDelete(id: number) {
+    await this.tagRepository.softDelete(id);
+    return {
+      softDeleted: true,
       id,
     };
   }

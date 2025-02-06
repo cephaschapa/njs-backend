@@ -25,6 +25,7 @@ export class TagsController {
     return await this.tagsService.create(createTagDto);
   }
 
+  // Delete a tag
   @Delete()
   @ApiOperation({
     summary: 'Delete a tag',
@@ -36,5 +37,19 @@ export class TagsController {
   })
   public async delete(@Query('id', ParseIntPipe) id: number) {
     return await this.tagsService.delete(id);
+  }
+
+  // Soft delete a tag
+  @Delete('soft-delete')
+  @ApiOperation({
+    summary: 'Soft delete a tag',
+    description: 'Soft delete a tag by id',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Tag soft deleted successfully',
+  })
+  public async softDelete(@Query('id', ParseIntPipe) id: number) {
+    return await this.tagsService.softDelete(id);
   }
 }

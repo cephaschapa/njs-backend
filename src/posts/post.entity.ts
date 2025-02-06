@@ -11,10 +11,9 @@ import {
 } from 'typeorm';
 import { PostType } from './enums/postType.enum';
 import { postStatus } from './enums/postStatus.enum';
-import { CreatePostMetaOptionsDto } from '../meta-options/dtos/create-post-meta-options.dto';
-import { MetaOptions } from 'src/meta-options/meta-option.entity';
-import { Tag } from 'src/tags/tag.entity';
-import { User } from 'src/users/user.entity';
+import { MetaOptions } from '../meta-options/meta-option.entity';
+import { Tag } from '../tags/tag.entity';
+import { User } from '../users/user.entity';
 
 @Entity()
 export class Post {

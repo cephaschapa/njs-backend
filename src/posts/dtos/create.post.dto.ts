@@ -19,7 +19,7 @@ import { CreatePostMetaOptionsDto } from '../../meta-options/dtos/create-post-me
 import { Type } from 'class-transformer';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Column } from 'typeorm';
-import { Tag } from 'src/tags/tag.entity';
+import { Tag } from '../../tags/tag.entity';
 
 export class CreatePostDto {
   @ApiProperty({

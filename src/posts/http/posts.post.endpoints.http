@@ -2,7 +2,7 @@ POST http://localhost:3300/posts
 Content-Type: application/json
 
 {
-    "title": "Post 1 testing post zzzzzzzzzzzzzzzzzzzz",
+    "title": "Post 1 testing post 0",
     "content": "Content 2",
     "postType": "post",
     "slug": "post-2",
@@ -10,7 +10,7 @@ Content-Type: application/json
     "schema": "{\r\n \"@context\": \"https://schema.org\",\r\n \"@type\": \"Person\"\r\n}",
     "featuredImageUrl": "http://string.com",
     "publishedOn": "2021-08-01T00:00:00.000Z",
-    "tags": [1,2],
+    "tags": [6],
     "metaOptions":{
         "metaValue": "{\"sidebarEnbaled\": true, \"theme\": \"dark\"}"
     },

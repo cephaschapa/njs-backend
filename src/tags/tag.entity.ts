@@ -1,4 +1,4 @@
-import { Post } from 'src/posts/post.entity';
+import { Post } from '../posts/post.entity';
 import {
   Column,
   CreateDateColumn,
@@ -18,7 +18,6 @@ export class Tag {
     type: 'varchar',
     length: 256,
     nullable: false,
-    unique: true,
   })
   name: string;
 
@@ -62,6 +61,4 @@ export class Tag {
 
   @DeleteDateColumn()
   deletedDate: Date;
-
-  // @ManyToMany(() => Tag, (tag) => tag.posts)
 }
