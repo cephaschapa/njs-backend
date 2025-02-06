@@ -5,10 +5,18 @@ import { UsersModule } from './users/users.module';
 import { PostsModule } from './posts/posts.module';
 import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/user.entity';
 import { TagsModule } from './tags/tags.module';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
 import { ConfigModule } from '@nestjs/config';
+
+// Set conditional environment
+
+const ENV =
+  process.env.NODE_ENV === 'production'
+    ? '.env.production'
+    : process.env.NODE_ENV === 'test'
+      ? '.env.development'
+      : '.env.development';
 
 /**
  * User created modules are imported here
@@ -20,7 +28,7 @@ import { ConfigModule } from '@nestjs/config';
     PostsModule,
     AuthModule,
     TagsModule,
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, envFilePath: !ENV ? '.env' : ENV }),
     MetaOptionsModule,
     TypeOrmModule.forRootAsync({
       imports: [],
@@ -28,11 +36,11 @@ import { ConfigModule } from '@nestjs/config';
       useFactory: () => ({
         type: 'postgres',
         autoLoadEntities: true,
-        host: process.env.DB_HOST || 'localhost',
-        port: (process.env.DB_PORT as never as number) || 5432,
+        host: 'localhost',
+        port: 5432,
         synchronize: true,
-        username: process.env.DB_USERNAME || 'postgres',
-        password: process.env.DB_PASSWORD || 'develop',
+        username: 'postgres',
+        password: 'develop',
         database: 'blog',
       }),
     }),

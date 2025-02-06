@@ -50,7 +50,7 @@ export class UsersService {
     limit: number,
     page: number,
   ): any {
-    const env = this.configService.get<string>('DB_HOST');
+    const env = this.configService.get<string>('DB_PORT');
     console.log(env);
     return [];
   }
