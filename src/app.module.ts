@@ -7,7 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TagsModule } from './tags/tags.module';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 // Set conditional environment
 
@@ -32,16 +32,16 @@ const ENV =
     MetaOptionsModule,
     TypeOrmModule.forRootAsync({
       imports: [],
-      inject: [],
-      useFactory: () => ({
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         autoLoadEntities: true,
-        host: 'localhost',
-        port: 5432,
+        host: configService.get<string>('DB_HOST'),
+        port: +configService.get<number>('DB_PORT'),
         synchronize: true,
-        username: 'postgres',
-        password: 'develop',
-        database: 'blog',
+        username: configService.get<string>('DB_USERNAME'),
+        password: configService.get<string>('DB_PASSWORD'),
+        database: configService.get<string>('DB_NAME'),
       }),
     }),
   ],
