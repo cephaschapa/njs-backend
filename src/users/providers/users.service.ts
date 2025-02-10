@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { GetUserParamsDto } from '../dtos/get-user-params.dto';
 import { Repository } from 'typeorm';
 import { User } from '../user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from '../dtos/create.user.dto';
-import { ConfigService } from '@nestjs/config';
+import { ConfigService, ConfigType } from '@nestjs/config';
+import profileConfig from '../config/profile.config';
 
 /**
  * Class to class to connect Users table and perform business logic operations
@@ -19,9 +20,9 @@ export class UsersService {
     @InjectRepository(User)
     private usersRepository: Repository<User>,
 
-    // Injecting ConfigService
-
-    private readonly configService: ConfigService,
+    // Injecting ProfileConfig
+    @Inject(profileConfig.KEY)
+    private readonly profileConfiguration: ConfigType<typeof profileConfig>,
   ) {}
 
   /**
@@ -50,8 +51,7 @@ export class UsersService {
     limit: number,
     page: number,
   ): any {
-    const env = this.configService.get<string>('DB_PORT');
-    console.log(env);
+    console.log(this.profileConfiguration.apiKey);
     return [];
   }
 

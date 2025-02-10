@@ -8,7 +8,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TagsModule } from './tags/tags.module';
 import { MetaOptionsModule } from './meta-options/meta-options.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { appConfig } from './config/app.config';
+import appConfig from './config/app.config';
+import databaseConfig from './config/database.config';
+import environmentValidation from './config/environment.validation';
 
 // Set conditional environment
 
@@ -19,10 +21,6 @@ const ENV =
       ? '.env.development'
       : '.env.development';
 
-/**
- * User created modules are imported here
- */
-
 @Module({
   imports: [
     UsersModule,
@@ -32,7 +30,8 @@ const ENV =
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: !ENV ? '.env' : ENV,
-      load: [appConfig],
+      load: [appConfig, databaseConfig],
+      validationSchema: environmentValidation,
     }),
     MetaOptionsModule,
     TypeOrmModule.forRootAsync({
