@@ -1,4 +1,9 @@
-import { Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  RequestTimeoutException,
+} from '@nestjs/common';
 import { GetUserParamsDto } from '../dtos/get-user-params.dto';
 import { Repository } from 'typeorm';
 import { User } from '../user.entity';
@@ -30,10 +35,27 @@ export class UsersService {
    * @param user */
 
   public async createUser(createUserDto: CreateUserDto) {
-    // check if user exists
-    const existingUser = await this.usersRepository.findOne({
-      where: { email: createUserDto.email },
-    });
+    let existingUser = undefined;
+    try {
+      // check if user exists
+      existingUser = await this.usersRepository.findOne({
+        where: { email: createUserDto.email },
+      });
+
+      if (existingUser) {
+        console.log(existingUser);
+        throw new BadRequestException(
+          'User already exists, please check you email',
+        );
+      }
+    } catch (error) {
+      // Might save the details of the exception to the db and log file
+      // Information which is sensitive to the user should not be exposed
+      console.log(error);
+      throw new RequestTimeoutException('Request Timeout', {
+        description: 'User already exists',
+      });
+    }
 
     // Handle exception
 

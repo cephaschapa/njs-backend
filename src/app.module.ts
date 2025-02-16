@@ -11,6 +11,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import environmentValidation from './config/environment.validation';
+import { Post } from './posts/post.entity';
+import { User } from './users/user.entity';
+import { MetaOptions } from './meta-options/meta-option.entity';
+import { Tag } from './tags/tag.entity';
 
 // Set conditional environment
 
@@ -37,6 +41,7 @@ const ENV =
     TypeOrmModule.forRootAsync({
       imports: [],
       inject: [ConfigService],
+
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
         autoLoadEntities:
@@ -48,6 +53,7 @@ const ENV =
         username: configService.get<string>('database.username'),
         password: configService.get<string>('database.password'),
         database: configService.get<string>('database.database'),
+        entities: [Post, User, MetaOptions, Tag],
       }),
     }),
   ],
