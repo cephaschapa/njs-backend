@@ -60,12 +60,18 @@ export class UsersService {
     // Handle exception
 
     // Create user
-    let newUser = this.usersRepository.create(createUserDto);
-    newUser = await this.usersRepository.save(newUser);
+    try {
+      let newUser = this.usersRepository.create(createUserDto);
+      newUser = await this.usersRepository.save(newUser);
+      return newUser;
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'User could not be created',
+        error.message,
+      );
+    }
 
     // Return user
-
-    return newUser;
   }
 
   public findAll(
@@ -82,7 +88,18 @@ export class UsersService {
    * @param id */
 
   public async findOneById(id: number): Promise<User> {
-    return await this.usersRepository.findOneBy({ id });
+    let user = undefined;
+    try {
+      user = this.usersRepository.findOneBy({ id });
+    } catch (error) {
+      throw new RequestTimeoutException('Problem connecting to the database');
+    }
+
+    if (!user) {
+      throw new BadRequestException('User not found');
+    }
+
+    return user;
   }
 
   /**
