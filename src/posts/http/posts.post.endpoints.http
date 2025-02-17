@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "title": "Post 1 testing post 0",
-    "content": "Content 2",
+    "content": "Content 3",
     "postType": "post",
     "slug": "post-2",
     "status": "published",
@@ -16,3 +16,4 @@ Content-Type: application/json
     },
     "authorId": 1
 }
+

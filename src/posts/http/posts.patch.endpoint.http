@@ -2,9 +2,9 @@ PATCH http://localhost:3300/posts
 Content-Type: application/json
 
 {
-        "id": 13,
+        "id": 245,
         "title": "Post with tags update",
-        "content": "Content 1 with tags",
+        "content": "Content 1 with tagsss",
         "postType": "post",
         "slug": "post-1",
         "status": "published",

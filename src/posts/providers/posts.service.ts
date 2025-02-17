@@ -1,4 +1,10 @@
-import { Body, Inject, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Inject,
+  Injectable,
+  RequestTimeoutException,
+} from '@nestjs/common';
 import { UsersService } from '../../users/providers/users.service';
 import { CreatePostDto } from '../dtos/create.post.dto';
 import { Repository } from 'typeorm';
@@ -73,23 +79,60 @@ export class PostsService {
   }
 
   public async update(patchPostDto: PatchPostDto) {
-    console.log(patchPostDto);
-    // find the tag if it exists
-    let tags = await this.tagService.findMultiple(patchPostDto.tags);
+    let tags = undefined;
+    let post = undefined;
+    try {
+      // find the tag if it exists
+      tags = await this.tagService.findMultiple(patchPostDto.tags);
+      if (!tags) {
+        throw new BadRequestException('Tags not found', {
+          description: 'Tags not found',
+        });
+      }
+      // Number of tags need to be equal to the number of tags in the request
+      if (!tags || tags.length !== patchPostDto.tags.length) {
+        throw new BadRequestException(
+          'Please check you tag ids and ensure they are correct',
+        );
+      }
+    } catch (error) {
+      throw new RequestTimeoutException('Could not perform operation');
+    }
     // find the post if it exists
-    let post = await this.postRepository.findOneBy({ id: patchPostDto.id });
-    // Update the properties
-    post.title = patchPostDto.title ?? post.title;
-    post.content = patchPostDto.content ?? post.content;
-    post.status = patchPostDto.status ?? post.status;
-    post.slug = patchPostDto.slug ?? post.slug;
-    post.postType = patchPostDto.postType ?? post.postType;
-    post.featuredImage = patchPostDto.featuredImageUrl ?? post.featuredImage;
-    post.publishedOn = patchPostDto.publishedOn ?? post.publishedOn;
-    // Assign the new tags
-    post.tags = tags;
+
+    try {
+      post = await this.postRepository.findOneBy({ id: patchPostDto.id });
+
+      if (!post) {
+        throw new BadRequestException('Post not found', {
+          description: 'Post not found',
+        });
+      }
+      // Update the properties
+      post.title = patchPostDto.title ?? post.title;
+      post.content = patchPostDto.content ?? post.content;
+      post.status = patchPostDto.status ?? post.status;
+      post.slug = patchPostDto.slug ?? post.slug;
+      post.postType = patchPostDto.postType ?? post.postType;
+      post.featuredImage = patchPostDto.featuredImageUrl ?? post.featuredImage;
+      post.publishedOn = patchPostDto.publishedOn ?? post.publishedOn;
+      // Assign the new tags
+      post.tags = tags;
+    } catch (error) {
+      throw new BadRequestException(
+        'Could not perfor operation please try again later',
+      );
+    }
     // save the post and return it
-    return await this.postRepository.save(post);
+    try {
+      post = await this.postRepository.save(post);
+    } catch (error) {
+      throw new RequestTimeoutException(
+        'Could not save post please try again later',
+      );
+    }
+
+    return post;
   }
 
   /**
